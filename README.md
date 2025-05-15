@@ -1,9 +1,29 @@
-use an api and save on monthly subscriptions.
-openrouter! openai, runpod, notebookllm
-sites: huggingface/yeahhub/ollama/runpod/leaderboard
-chub?
-merging models (censored and not, coding with txt generation, etc)
+Notes:
+    - use an api and save on monthly subscriptions.
+    - checkout openrouter
+    - sites: huggingface/leaderboard
+    - chub?
+    - merging models (censored and not, coding with txt generation, etc)
 
+To view the slides as they were presented at CackalackyCon2025 (along with video clips),
+go to the directory where you downloaded the repo, give
+```python
+   python -m http.server
+```
+That will start a small webserver, serving content from your directory. Open a browser to
+localhost:8000/uncensored.html
+
+
+To use the code in this repo, make sure you install the necessary libraries.
+You can use 
+```python
+   pip install -r requirements.txt
+```
+The files are as follows:
+   - chainlit_ollama (get a web interface for your ollama service running locally)
+   - pdf_to_rag.py (parse/chunk/vectorize a collection of PDFs into a vector database)
+   - chainlit_runpod.py (get a web interface for a model running on runpod)
+   - chainlit_rag_runpod.py (use your vectorized db from your pdfs to support querying a model on runpod)
 
 # The Uncensored Underground: Using Uncensored AI Models to Create a Hacking Assistant
 
@@ -43,13 +63,24 @@ Learn how to build a personalized programming assistant using NotebookLLM and fr
 
 ## Chat with LLM locally
 
-1. Download ollama (https://ollama.com/)
+1. Download and install (https://ollama.com/)
 2. In a terminal, execute ``ollama run huihui_ai/phi4-mini-abliterated``
 3. Ollama will download this uncensored model, run it, and display a prompt in the terminal
 4. Interact with the local LLM: your conversation is local and private
 5. When you're finished, end the ollama process with ``\\bye``
 
+Once ollama has downloaded a model, you can use it any time afterwards.
+See your downloaded models with ``ollama list`` . When you ``run`` a model
+that's already downloaded it's much faster to start.
+
 ## Local LLM Chat Interface with Chainlit and Ollama
+
+When you start up that ollama as in the last step, you have an interactive prompt
+waiting in the terminal. That's great and it has no overhead for those with small
+machines. If you're only using a CPU and no GPU, you should probably stick with that.
+On the other hand, it's nice to have a web interface even if it eats a little memory.
+
+This is for those who would like that web interface (it will also get used later on).
 
 Create a simple but powerful chat interface for local LLMs using Chainlit and Ollama.
 
@@ -114,13 +145,46 @@ Notes
 
 ## Creating a RAG database 
 
-## How RAG works
+With a Retrieval Augmented Generation (RAG) system,
+you format your document(s) so the LLM can understand them (into a vector database).
+Wnen you query the LLM, the system first does a search through that datab ase 
+which are sent, along with the query, to provide context for the model.
+The model can then respond with information it already knows from its training and
+from your document database. Using this method, you can make sure the model has
+up-to-date information by periodically updating your database.
+
 
 ## ``pdf_to_rag.py``
+This file does just what it says: you create a directory ``pdfs`` in which you place one or more
+pdf documents. Also create a subdirectory to hold the database that will result. Execute this program and your pdfs are parsed, chunked, and vectorized. Then that info is saved into Chroma vector
+database. You can use that database in later queries to get targeted answers from your model, whether
+runing locally (with ollama, say) or remotely (runpod).
 
 ## Create Personal Assistant on Cloud big machines (RunPod) ``chainlit_runpod.py``
 
+- make an account on runpod.io, add some money to your account.
+- deploy:
+  + pick some hardware to use (I used RTX 4090 for the talk).
+  + pick a model (I used cognitivecomputations/dolphin-2.9-llama3-8b)
+  + pick a template (I used vllm-latest)
+  + modify the template to use your model (it's in the template configuration --model parameter)
+  + start the pod
+- make sure you can connect the pod once it has started (from runpod) and copy that url to the instance.
+- edit chainlit_runpod.py
+  + make sure the model variable has your model name exactly
+  + make sure the base_url has the url for your pod instance.
+- run chainlit run chainlit_runpod.py
+
+
+
 ## Using Our Local RAG with our Cloud LLM ``chainlit_rag_runpod.py``
+
+Once you've created your database of documents (running pdf_to_rag.py), you
+can use that database over and over. Make the model/url changes to the file
+``chainlit_rag_runpod.py`` just as in the last step. In that step we interact
+directly with the model through chainlit. This step is just like that except that
+we also add context for the model by searching for relevant info from the document
+database first. That's the power of a RAG system.
 
 
 
