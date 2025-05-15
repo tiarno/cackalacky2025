@@ -1,4 +1,5 @@
 Notes:
+
     - use an api and save on monthly subscriptions.
     - checkout openrouter
     - sites: huggingface/leaderboard
@@ -6,12 +7,7 @@ Notes:
     - merging models (censored and not, coding with txt generation, etc)
 
 To view the slides as they were presented at CackalackyCon2025 (along with video clips),
-go to the directory where you downloaded the repo, give
-```python
-   python -m http.server
-```
-That will start a small webserver, serving content from your directory. Open a browser to
-localhost:8000/uncensored.html
+see https://tiarno.github.io/cackalacky2025_presentation/
 
 
 To use the code in this repo, make sure you install the necessary libraries.
@@ -20,6 +16,7 @@ You can use
    pip install -r requirements.txt
 ```
 The files are as follows:
+
    - chainlit_ollama (get a web interface for your ollama service running locally)
    - pdf_to_rag.py (parse/chunk/vectorize a collection of PDFs into a vector database)
    - chainlit_runpod.py (get a web interface for a model running on runpod)
@@ -121,26 +118,21 @@ chainlit run chainlit_ollama.py
 
 5. Start Chatting
    
-    Open your web browser and navigate to http://localhost:8000
-
-    You should see a chat interface where you can interact with the local LLM
+- Open your web browser and navigate to http://localhost:8000
+- You should see a chat interface where you can interact with the local LLM
 
 How It Works
 
-    The script creates a web interface using Chainlit
-
-    When you send a message, it's processed by the local Phi-4 model running through Ollama
-
-    Responses are displayed in real-time in the chat interface
+- The script creates a web interface using Chainlit
+- When you send a message, it's processed by the local Phi-4 model running through Ollama
+- Responses are displayed in real-time in the chat interface
 
 
 Notes
 
-    Keep both terminals running (Ollama and Chainlit)
-
-    First-time model download might take a few minutes
-
-    The interface is accessible only on your local machine
+- Keep both terminals running (Ollama and Chainlit)
+- First-time model download might take a few minutes 
+- The interface is accessible only on your local machine
 
 
 ## Creating a RAG database 
@@ -156,7 +148,7 @@ up-to-date information by periodically updating your database.
 
 ## ``pdf_to_rag.py``
 This file does just what it says: you create a directory ``pdfs`` in which you place one or more
-pdf documents. Also create a subdirectory to hold the database that will result. Execute this program and your pdfs are parsed, chunked, and vectorized. Then that info is saved into Chroma vector
+pdf documents. Also create a subdirectory  `embeddings`` to hold the database that will result. Execute this program and your pdfs are parsed, chunked, and vectorized. Then that info is saved into Chroma vector
 database. You can use that database in later queries to get targeted answers from your model, whether
 runing locally (with ollama, say) or remotely (runpod).
 
