@@ -1,0 +1,10 @@
+chainlit
+langchain
+langchain-community
+langchain-chroma
+langchain-huggingface
+langchain-ollama
+httpx
+pymupdf
+pysqlite3-binary
+sentence-transformers

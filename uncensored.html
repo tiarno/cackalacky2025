@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The Uncensored Underground: Using Uncensored AI Models to Create a Hacking Assistant</title>
+
+		<meta name="author" content="Tim Arnold">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/sky.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Uncensored Underground</h3>
+					<p>Using Uncensored AI Models to Create a Hacking Assistant</p>
+					<p>
+						<small>Tim Arnold (tiarno)</small>
+					</p>
+				</section>
+
+				<section>
+					<h2>What is an Uncensored Model</h2>
+                    <p>LLMs are born uncensored. They're fine-tuned to have "guardrails."</p>
+					<p>
+                        <ul>
+						<li><a href="https://openai.com/safety/evaluations-hub/">https://openai.com/safety/evaluations-hub/</a></li>
+                        <li><a href="https://grok.com/?ref=aiartweekly">https://grok.com/</a></li>
+                        </ul>
+                    </p>
+                    <p>Why would we want uncensored models?</p>
+				</section>
+				<section>
+                    <h2>NotebookLM: Psuedo-uncensored</h2>
+					<p>
+                        <ul>
+                            <li><a href="https://notebooklm.google.com">notebooklm.google.com</a></li>
+                            <li>Search: 100 best hacking pdfs</li>
+                            <li><a href="https://github.com/yeahhub/Hacking-Security-Ebooks">https://github.com/yeahhub/Hacking-Security-Ebooks</a></li>
+                            <li>Download, unzip, add to NotebookLM (up to 50)</li>
+                            <li>Chat, create a mindmap, ask for code</li>
+                        </ul>
+				</section>
+				<section>
+					<h2>Using NotebookLM</h2>
+					<p><video><source src="graphics/notebooklm.mp4" type="video/mp4" /></video></p>
+				</section>
+                <section>
+                    <h2>Really Uncensored: Ollama</h2>
+					<p>and private too!
+                        <ul>
+                            <li><a href="https://ollama.com">ollama.com</a></li>
+                            <li>Download, install</li>
+                            <li>Search: ollama -> "uncensored" or "ablated"</li>
+                        </ul>
+				</section>
+				<section>
+					 <img src="graphics/model_names.png"/>
+				</section>
+				<section>
+					<h2>Ollama Site</h2>
+					<p><video><source src="graphics/ollama1.mp4" type="video/mp4" /></video></p>
+				</section>
+                <section>
+                    <h2>Naming: LLM Primer</h2>
+					<p>llama3.2:1b-instruct-q4_k_m</p>
+					<ul>
+						<li>1b = 1 billion params, ~2gb filesize</li>
+						<li>instruct: good for chat. (also text, code, etc)</li>
+						<li>q4 = quantization of 4 (smaller=worse)</li>
+						<li>k = k-means clustering/m=medium precision</li>
+						<li>context: how much info you can send (tokens)</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Can I Use this LLM?</h2>
+                    <p>
+                        <img src="graphics/caniusellm.png"/>
+                    </p>
+                </section>
+                <section>
+                    <h2>Ollama in Action</h2>
+                        <p><video><source width="110%" src="graphics/ollama2.mp4" type="video/mp4" /></video></p>
+                </section>
+				<section>
+					<h2>How to Find Models?</h2>
+					<ul>
+						<li>download from ollama (running ollama local)</li>
+						<li>HuggingFace <a href="https://huggingface.co/">https://huggingface.co/</a></li>
+					</ul>
+				</section>
+				<section>
+					<h2>Deploy Model on RunPod</h2>
+					<p>Using Serious Hardware: Private, Uncensored, Powerful</p>
+					<ul>
+						<li><a href="https://runpod.io">runpod.io</a></li>
+						<li>Deploy</li>
+						<ul>
+							<li>Hardware: RTX 4090 16vCPU/62Gb RAM</li>
+							<li>Template: vllm-latest</li>
+							<li>Model: cognitivecomputations/dolphin-2.9-llama3-8b</li>
+						</ul>
+					</ul>
+				</section>
+				<section>
+					<ul>
+						<li>Choose hardware</li>
+						<li>Choose model (huggingface for example)</li>
+						<li>Choose template and modify (at least the model name)</li>
+						<li>Deploy and get the URL for later</li>
+
+					</ul>
+				</section>
+				 <section>
+                        <p><video><source src="graphics/runpod.mp4" type="video/mp4" /></video></p>
+                </section>
+				<section>
+					<h2>Connect to your Pod</h2>
+						<p>Connect with ChainLit</p>
+						<ul>
+							<li>Edit chainlit_runpod.py</li>
+							<li>Specify model and url (you get from runpod/connect)</li>
+							<li>run chainlit_runpod.py</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Chainlit Connection</h2>
+					<p><video><source src="graphics/runpod2.mp4" type="video/mp4" /></video></p>
+				</section>
+				
+				<section>
+					<h2>RAG Retrieval Augmented Generation</h2>
+					<ul>
+						<li>Create a database from your documents. </li>
+						<li>Query the database for support to your LLM queries.</li>
+						<li>Like NotebookLM but private and uncensored</li>
+					</ul>
+				</section>
+				<section>
+					<p><img src="graphics/dbdiag.png"/></p>
+				</section>
+				<section>
+					<p><img src="graphics/ragdiag.png"/></p>
+				</section>
+				
+				<section data-auto-animate>
+					<h2 data-id="code-title">pdf_to_rag.py</h2>
+					<pre><code class="hljs python" data-trim data-line-numbers>
+						def main():
+							pdf_directory = "./pdfs"  # <-- all your pdfs go here
+							persist_directory = "./embeddings" # <-- to contain the saved vector database.
+    
+							vector_store = Chroma.from_documents(
+            					documents=all_chunks,
+            					embedding=embeddings,
+            					persist_directory=persist_directory
+        						)
+							vector_store.persist()
+					</code></pre>
+				</section>
+				<section>
+					<h2>Implement Your RAG System</h2>
+					<ul>
+						<li>Best on powerful hardware (e.g. runpod)</li>
+						<li>Use <code>pdf_to_rag.py</code> to create your database locally</li>
+						<li>Use <code>chainlit_rag_runpod.py</code> to use the db and interact on runpod.</li>
+						<li>Note: Use <code>chainlit_runpod.py</code> to interact with runpod to ignore your document database.</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Summary</h2>
+					<ul>
+						<li>Use NotebookLM and Hacking PDFs for an assistant</li>
+						<li>Use Ollama and uncensored models for private, uncontrolled chats</li>
+						<li>Set up private remote hardware for big models, interact privately from your machine</li>
+						<li>Code and slides: <a href="https://github.com/tiarno/cackalacky2025">https://github.com/tiarno/cackalacky2025</a></li>
+					</ul>
+				</section></sectoin>
+			</div>
+
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/search/search.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
+			});
+
+		</script>
+
+	<script src="//localhost:35729/livereload.js?snipver=1" async="" defer=""></script></body>
+</html>
