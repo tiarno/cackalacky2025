@@ -9,7 +9,7 @@ conversation_history = []
 
 model = 'cognitivecomputations/dolphin-2.9-llama3-8b'
 base_url = "https://7ihttrn1b8i9lk-8000.proxy.runpod.net/"
-
+ 
 def format_conversation_history(history):
     formatted_history = str(history).strip('[]')
     formatted_history = formatted_history.replace('), (', '; ').replace('(', '').replace(')', '')
