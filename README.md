@@ -158,13 +158,17 @@ runing locally (with ollama, say) or remotely (runpod).
 - deploy:
   + pick some hardware to use (I used RTX 4090 for the talk).
   + pick a model (I used cognitivecomputations/dolphin-2.9-llama3-8b)
-  + pick a template (I used vllm-latest)
-  + modify the template to use your model (it's in the template configuration --model parameter)
+  + pick a template (I used vllm-latest) I used these options:
+    ``--host 0.0.0.0 --port 8000`` 
+    ``--model cognitivecomputations/dolphin-2.9-llama3-8b --dtype bfloat16``
+    `` --enforce-eager --gpu-memory-utilization 0.95``
+  + depending on what model you pick, you may need to add HF_TOKEN as a environment variable.
+    it should contain your HUGGINGFACE api key, which you get when you sign up for it on huggingface.
   + start the pod
-- make sure you can connect the pod once it has started (from runpod) and copy that url to the instance.
+- make sure you can connect the pod once it has started (from runpod, "http connect") and copy that url to your chainlit code.
 - edit chainlit_runpod.py
-  + make sure the model variable has your model name exactly
-  + make sure the base_url has the url for your pod instance.
+  + make sure the ``model`` variable has your model name exactly
+  + make sure the ``base_url`` has the url for your pod instance.
 - run chainlit run chainlit_runpod.py
 
 
@@ -177,6 +181,4 @@ can use that database over and over. Make the model/url changes to the file
 directly with the model through chainlit. This step is just like that except that
 we also add context for the model by searching for relevant info from the document
 database first. That's the power of a RAG system.
-
-
 
